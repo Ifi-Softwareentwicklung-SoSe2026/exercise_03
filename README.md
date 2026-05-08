@@ -212,6 +212,21 @@ public interface IVergleichbar<T>
 
 - Implementiere `IVergleichbar<Himmelskoerper>` in `Himmelskoerper`, sodass Himmelskörper anhand ihrer `KatalogNummer` verglichen werden können.
 
+<!-- class="lia-callout--note" -->
+> **💡 Bonusaufgabe – Operatorüberladung:**
+> Wenn du `IVergleichbar<T>` implementiert hast, kannst du die gleiche Logik auch als überladene Operatoren anbieten.
+> Füge dazu in `Himmelskoerper` folgende statische Methoden hinzu:
+>
+> ```csharp
+> public static bool operator >(Himmelskoerper a, Himmelskoerper b)  => a.IstGroesserAls(b);
+> public static bool operator <(Himmelskoerper a, Himmelskoerper b)  => a.IstKleinerAls(b);
+> public static bool operator ==(Himmelskoerper a, Himmelskoerper b) => a.VergleicheMit(b) == 0;
+> public static bool operator !=(Himmelskoerper a, Himmelskoerper b) => !(a == b);
+> ```
+>
+> Damit kannst du statt `erde.IstGroesserAls(mond)` direkt `erde > mond` schreiben.
+> Die Interface-Methoden bleiben die eigentliche Implementierung — die Operatoren sind nur **syntaktischer Zucker** darüber.
+
 #### ✅ Testaufgabe
 
 ```csharp
