@@ -73,31 +73,99 @@ Wir erweitern die Raumfahrt-Mission um Konzepte der **Schnittstellenprogrammieru
 2. Füge die finalen Klassen aus Aufgabe 02 hinzu (falls noch nicht vorhanden), die `solutions`-Version aus `exercise_02` kann als Ausgangspunkt genutzt werden.
 3. Alle Klassen sollen weiterhin im Namespace **`RaumfahrtMission`** liegen.
 
-### **🤝 Aufgabe 0: Git-Kollaboration**
+### **🛠️ Aufgabe 0: Git und GitHub kennenlernen**
 
-*Lernziele: Git-Branching, Pull Requests, Code Review*
+*Lernziele: Commits, Branches, Push/Pull, Pull Requests, Code Review mit GitHub*
 
 ---
 
 #### **📝 Aufgabenstellung**
 
-Übt die kollaborative Arbeit mit Git und GitHub. Nehmt dabei eine der folgenden Rollen ein:
+Git und GitHub haben zwei Dimensionen, die du in dieser Aufgabe beide kennenlernen sollst:
 
-| Rolle | Aufgabe |
-|-------|---------|
-| **Maintainer** | Koordiniert die Implementierung, ist verantwortlich für das Repository-Setup, und reviewt Pull Requests. |
-| **Developer** | Implementiert die Aufgaben in separaten Branches und erstellt Pull Requests zum `main`-Branch. |
+| Dimension | Werkzeuge & Features |
+|-----------|----------------------|
+| **Lokal** (Visual Studio Code + Git) | Repository klonen (`clone`), Änderungen vormerken (`add`/`stage`), committen (`commit`), Branches erstellen und wechseln (`branch`, `checkout`/`switch`), Änderungen zusammenführen (`merge`), Konflikte lösen, Git-Integration in VS Code (Source-Control-Panel) |
+| **Remote** (GitHub) | Änderungen hochladen (`push`) und herunterladen (`pull`/`fetch`), Pull Requests erstellen und reviewen, Issues anlegen und verfolgen, Code Review durch Copilot anfordern (GitHub Copilot Code Review), PR-Feedback von Lehrenden oder Agenten einarbeiten |
 
-**Workflow:**
+---
 
-1. **Developer** erstellt einen neuen Branch für jede Aufgabe, z. B. `feature/aufgabe-1-interfaces`.
-2. **Developer** implementiert die Aufgabe und pusht den Branch.
-3. **Developer** erstellt einen **Pull Request** auf GitHub.
-4. **Maintainer** reviewt den Pull Request, gibt Feedback und mergt ihn in `main`.
+#### **🔧 Lokale Git-Arbeit mit Visual Studio Code**
+
+1. **Repository klonen**
+
+   - Öffne VS Code und klone dein GitHub-Classroom-Repository über *Source Control → Clone Repository*.
+   - Alternativ im Terminal: `git clone <URL>`
+
+2. **Feature-Branch erstellen**
+
+   - Erstelle für jede Aufgabe einen eigenen Branch, z. B.:
+
+     ```bash
+     git switch -c feature/aufgabe-1-interfaces
+     # -c steht für "create" – erstellt den Branch und wechselt sofort dorthin
+     # Alternativ (ältere Syntax): git checkout -b feature/aufgabe-1-interfaces
+     ```
+
+   - Das hält den `main`-Branch sauber und ermöglicht später einen sauberen Pull Request.
+
+3. **Änderungen committen**
+
+   - Nutze aussagekräftige Commit-Nachrichten:
+
+     ```bash
+     git status                                        # Überblick: welche Dateien sind geändert?
+     git add Himmelskoerper.cs IMissionsobjekt.cs      # gezielt einzelne Dateien vormerken
+     git commit -m "feat: IMissionsobjekt Interface hinzugefügt"
+     ```
+
+   - Oder verwende das **Source Control Panel** in VS Code (Strg+Shift+G).
+
+4. **Änderungen pushen**
+
+   ```bash
+   git push origin feature/aufgabe-1-interfaces
+   ```
+
+---
+
+#### **🌐 Remote-Arbeit mit GitHub**
+
+1. **Pull Request erstellen**
+
+   - Öffne das Repository auf GitHub.
+   - Klicke auf *Compare & pull request* für deinen Branch.
+   - Beschreibe deine Änderungen im PR und wähle `main` als Zielbranch.
+
+2. **Code Review von Copilot anfordern**
+
+   - Im Pull Request: Klicke auf *Reviewers* → wähle **Copilot** aus.
+   - Copilot analysiert deinen Code und gibt automatisch Feedback.
+   - Arbeite das Feedback ein (neue Commits im selben Branch) und markiere Kommentare als erledigt.
+
+3. **PR von Lehrenden reviewen**
+
+   - Dein Lehrender oder ein Agent kann ebenfalls einen Review hinterlassen.
+   - Lies die Kommentare, beantworte Fragen und passe deinen Code an.
+   - Nach Freigabe wird der PR in `main` gemergt.
+
+4. **Issues nutzen**
+
+   - Erstelle ein Issue für einen Fehler oder eine Frage, z. B. *"Frage: Wie implementiere ich IEnumerable<T> korrekt?"*
+   - Verweise in Commit-Nachrichten auf Issues: `fix: Validierung korrigiert, closes #3`
+
+5. **Änderungen pullen**
+
+   - Halte deinen lokalen `main`-Branch aktuell:
+
+     ```bash
+     git switch main
+     git pull origin main
+     ```
 
 <!-- class="lia-callout--note" -->
 > **Hinweis:**
-> Nutze aussagekräftige Commit-Nachrichten, z. B. `feat: IMissionsobjekt Interface hinzugefügt` oder `fix: Validierung in Himmelskoerper korrigiert`.
+> Erstelle für **jede der folgenden Aufgaben** (1–4) einen eigenen Feature-Branch, einen Pull Request und fordere dort einen Copilot-Review an. So übst du den vollständigen Git-Workflow.
 
 ### **🔌 Aufgabe 1: Interfaces für die Mission**
 
