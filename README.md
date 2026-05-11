@@ -323,6 +323,9 @@ public class FrachtShip : SpaceShip
     {
         LadungInTonnen = ladungInTonnen;
     }
+
+    public override string GetStatusBericht()
+        => $"FrachtShip {Name} transportiert {LadungInTonnen} t Fracht";
 }
 
 public class ForschungsShip : SpaceShip
@@ -334,6 +337,9 @@ public class ForschungsShip : SpaceShip
     {
         Forschungsgebiet = forschungsgebiet;
     }
+
+    public override string GetStatusBericht()
+        => $"ForschungsShip {Name} untersucht {Forschungsgebiet}";
 }
 ```
 
