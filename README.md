@@ -177,13 +177,11 @@ Git und GitHub haben zwei Dimensionen, die du in dieser Aufgabe beide kennenlern
    - Wechsle in das geklonte Verzeichnis: `cd <repository-name>`
 
 2. Erstelle einen Branch `integration`
-3. Füge die finalen Klassen aus Aufgabe 02 hinzu (ins Projektunterverzeichniss `RaumfahrtMission`)
-4. passen Sie die Projektdatei so an, dass sie auch mit .NET 8 kompatibel ist (falls nötig)
-5. Testen Sie die Funktionalität
-6. Committe die Änderungen mit einer aussagekräftigen Nachricht
-7. Push den Branch und erstelle einen Pull Request auf GitHub
-8. Fordere einen Code Review von Copilot an und arbeite das Feedback ein
-9. merge den PR nach Freigabe nach `main`
+3. Prüfe mit `git status`, welche Dateien unverändert bzw. geändert sind
+4. Committe eine kleine Übungsänderung mit einer aussagekräftigen Nachricht
+5. Push den Branch und erstelle einen Pull Request auf GitHub
+6. Fordere einen Code Review von Copilot an und arbeite das Feedback ein
+7. Merge den PR nach Freigabe nach `main`
 
 ### **🔌 Aufgabe 1: Interfaces für die Mission**
 
@@ -267,4 +265,138 @@ Console.WriteLine(sonne.VergleicheMit(erde));   // negativ, da 10001 < 20001
 - Eine Klasse kann mehrere Interfaces implementieren.
 - `IComparable<T>` aus der .NET-Bibliothek funktioniert ähnlich wie `IVergleichbar<T>`.
 
-### **📂 Aufgabe 2: Klasse SpaceShip implementieren mit Interfaces aus 01**
+### **🚀 Aufgabe 2: SpaceShip mit Unterklassen über IMissionsobjekt nutzen**
+
+*Lernziele: Interface-Nutzung im Code, Polymorphismus, gemeinsame Verarbeitung unterschiedlicher Objekte*
+
+---
+
+#### **📝 Aufgabenstellung**
+
+Erweitere das Missionssystem um eine neue Basisklasse `SpaceShip`, die ebenfalls das Interface `IMissionsobjekt` aus Aufgabe 1 implementiert.
+
+Die Klasse `SpaceShip` dient als gemeinsame Basisklasse für verschiedene Raumschiffe. Leite davon mindestens zwei konkrete Unterklassen ab, damit sichtbar wird, warum ein Interface in einer Schleife oder einer Hilfsmethode nützlich ist.
+
+##### **🔧 Hilfestellungen**
+
+**1. Abstrakte Klasse `SpaceShip` einführen**
+
+```csharp
+public abstract class SpaceShip : IMissionsobjekt
+{
+    public string Name { get; }
+    public uint KatalogNummer { get; }
+    public int CrewGroesse { get; }
+
+    protected SpaceShip(string name, uint katalogNummer, int crewGroesse)
+    {
+        Name = name;
+        KatalogNummer = katalogNummer;
+        CrewGroesse = crewGroesse;
+    }
+
+    public abstract string GetStatusBericht();
+}
+```
+
+- `SpaceShip` soll gemeinsame Eigenschaften aller Raumschiffe kapseln.
+- Wie in Aufgabe 1 vorgegeben, gehört `GetStatusBericht()` dabei zum Vertrag von `IMissionsobjekt`.
+- `GetStatusBericht()` bleibt abstrakt, damit jede Unterklasse ihren eigenen Bericht formuliert.
+
+**2. Konkrete Unterklassen anlegen**
+
+Leite mindestens zwei Klassen von `SpaceShip` ab, zum Beispiel:
+
+- `CargoShip` mit einer Eigenschaft `LadungInTonnen`
+- `ResearchShip` mit einer Eigenschaft `Forschungsgebiet`
+
+Jede Unterklasse soll `GetStatusBericht()` passend überschreiben.
+
+Ein mögliches Klassendiagramm wäre zum Beispiel:
+
+```plantuml
+@startuml
+interface IMissionsobjekt {
+  +GetStatusBericht() : string
+}
+
+abstract class SpaceShip {
+  +Name : string
+  +KatalogNummer : uint
+  +CrewGroesse : int
+  +{abstract} GetStatusBericht() : string
+}
+
+class CargoShip {
+  +LadungInTonnen : float
+  +GetStatusBericht() : string
+}
+
+class ResearchShip {
+  +Forschungsgebiet : string
+  +GetStatusBericht() : string
+}
+
+IMissionsobjekt <|.. SpaceShip
+SpaceShip <|-- CargoShip
+SpaceShip <|-- ResearchShip
+@enduml
+```
+
+**3. Interface gezielt nutzen**
+
+Speichere Himmelskörper und Raumschiffe gemeinsam in einem Array oder in einer Liste vom Typ `IMissionsobjekt`.
+
+So kannst du alle Objekte mit derselben Schleife verarbeiten, obwohl sie aus unterschiedlichen Klassenhierarchien stammen:
+
+```csharp
+// sonne, erde und mond wurden bereits in Aufgabe 1 erzeugt
+IMissionsobjekt[] objekte = { sonne, erde, mond, cargoShip, researchShip };
+
+foreach (var objekt in objekte)
+{
+    Console.WriteLine(objekt.GetStatusBericht());
+}
+```
+
+**4. Hilfsmethode `MissionsReport` für beliebige Missionsobjekte**
+
+Schreibe zusätzlich eine Methode `MissionsReport`, die ein beliebiges `IMissionsobjekt` entgegennimmt und sowohl die normale Objektausgabe über `ToString()` als auch den `StatusBericht` ausgibt.
+
+```csharp
+static void MissionsReport(IMissionsobjekt objekt)
+{
+    Console.WriteLine(objekt.ToString());
+    Console.WriteLine(objekt.GetStatusBericht());
+}
+```
+
+So wird deutlich, dass nicht der konkrete Typ wichtig ist, sondern nur der durch das Interface garantierte Vertrag.
+
+#### ✅ Testaufgabe
+
+```csharp
+SpaceShip cargoShip = new CargoShip("Hermes", 50001, 12, 40.5f);
+SpaceShip researchShip = new ResearchShip("Gaia", 50002, 8, "Exoplaneten");
+
+static void MissionsReport(IMissionsobjekt objekt)
+{
+    Console.WriteLine(objekt.ToString());
+    Console.WriteLine(objekt.GetStatusBericht());
+}
+
+// sonne, erde und mond stammen aus Aufgabe 1
+IMissionsobjekt[] objekte = { sonne, erde, mond, cargoShip, researchShip };
+
+foreach (var objekt in objekte)
+{
+    MissionsReport(objekt);
+}
+```
+
+💡 Tipps
+====================
+
+- Ein Interface beschreibt, **was ein Objekt können muss**, nicht **von welcher Klasse es abstammt**.
+- Durch `IMissionsobjekt` können `Planet`, `Mond`, `Stern` und `SpaceShip` gemeinsam verarbeitet werden.
+- Die Basisklasse `SpaceShip` bündelt gemeinsame Eigenschaften, die Unterklassen ergänzen die Spezialisierung.
