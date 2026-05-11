@@ -312,36 +312,35 @@ Leite mindestens zwei Klassen von `SpaceShip` ab, zum Beispiel:
 
 Jede Unterklasse soll `GetStatusBericht()` passend überschreiben.
 
-Ein möglicher Aufbau wäre zum Beispiel:
+Ein mögliches Klassendiagramm wäre zum Beispiel:
 
-```csharp
-public class CargoShip : SpaceShip
-{
-    public float LadungInTonnen { get; }
-
-    public CargoShip(string name, uint katalogNummer, int crewGroesse, float ladungInTonnen)
-        : base(name, katalogNummer, crewGroesse)
-    {
-        LadungInTonnen = ladungInTonnen;
-    }
-
-    public override string GetStatusBericht()
-        => $"CargoShip {Name} transportiert {LadungInTonnen} t Fracht";
+```plantuml
+@startuml
+interface IMissionsobjekt {
+  +GetStatusBericht() : string
 }
 
-public class ResearchShip : SpaceShip
-{
-    public string Forschungsgebiet { get; }
-
-    public ResearchShip(string name, uint katalogNummer, int crewGroesse, string forschungsgebiet)
-        : base(name, katalogNummer, crewGroesse)
-    {
-        Forschungsgebiet = forschungsgebiet;
-    }
-
-    public override string GetStatusBericht()
-        => $"ResearchShip {Name} untersucht {Forschungsgebiet}";
+abstract class SpaceShip {
+  +Name : string
+  +KatalogNummer : uint
+  +CrewGroesse : int
+  +{abstract} GetStatusBericht() : string
 }
+
+class CargoShip {
+  +LadungInTonnen : float
+  +GetStatusBericht() : string
+}
+
+class ResearchShip {
+  +Forschungsgebiet : string
+  +GetStatusBericht() : string
+}
+
+IMissionsobjekt <|.. SpaceShip
+SpaceShip <|-- CargoShip
+SpaceShip <|-- ResearchShip
+@enduml
 ```
 
 **3. Interface gezielt nutzen**
