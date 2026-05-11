@@ -360,9 +360,17 @@ foreach (var objekt in objekte)
 }
 ```
 
-**4. Hilfsmethode für beliebige Missionsobjekte**
+**4. Hilfsmethode `MissionsReport` für beliebige Missionsobjekte**
 
-Schreibe zusätzlich eine Methode, die ein beliebiges `IMissionsobjekt` entgegennimmt und dessen Status ausgibt.
+Schreibe zusätzlich eine Methode `MissionsReport`, die ein beliebiges `IMissionsobjekt` entgegennimmt und sowohl die normale Objektausgabe über `ToString()` als auch den `StatusBericht` ausgibt.
+
+```csharp
+static void MissionsReport(IMissionsobjekt objekt)
+{
+    Console.WriteLine(objekt.ToString());
+    Console.WriteLine(objekt.GetStatusBericht());
+}
+```
 
 So wird deutlich, dass nicht der konkrete Typ wichtig ist, sondern nur der durch das Interface garantierte Vertrag.
 
@@ -372,12 +380,18 @@ So wird deutlich, dass nicht der konkrete Typ wichtig ist, sondern nur der durch
 SpaceShip cargoShip = new CargoShip("Hermes", 50001, 12, 40.5f);
 SpaceShip researchShip = new ResearchShip("Gaia", 50002, 8, "Exoplaneten");
 
+static void MissionsReport(IMissionsobjekt objekt)
+{
+    Console.WriteLine(objekt.ToString());
+    Console.WriteLine(objekt.GetStatusBericht());
+}
+
 // sonne, erde und mond stammen aus Aufgabe 1
 IMissionsobjekt[] objekte = { sonne, erde, mond, cargoShip, researchShip };
 
 foreach (var objekt in objekte)
 {
-    Console.WriteLine(objekt.GetStatusBericht());
+    MissionsReport(objekt);
 }
 ```
 
