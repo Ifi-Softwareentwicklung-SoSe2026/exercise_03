@@ -307,40 +307,40 @@ public abstract class SpaceShip : IMissionsobjekt
 
 Leite mindestens zwei Klassen von `SpaceShip` ab, zum Beispiel:
 
-- `FrachtShip` mit einer Eigenschaft `LadungInTonnen`
-- `ForschungsShip` mit einer Eigenschaft `Forschungsgebiet`
+- `CargoShip` mit einer Eigenschaft `LadungInTonnen`
+- `ResearchShip` mit einer Eigenschaft `Forschungsgebiet`
 
 Jede Unterklasse soll `GetStatusBericht()` passend überschreiben.
 
 Ein möglicher Aufbau wäre zum Beispiel:
 
 ```csharp
-public class FrachtShip : SpaceShip
+public class CargoShip : SpaceShip
 {
     public float LadungInTonnen { get; }
 
-    public FrachtShip(string name, uint katalogNummer, int crewGroesse, float ladungInTonnen)
+    public CargoShip(string name, uint katalogNummer, int crewGroesse, float ladungInTonnen)
         : base(name, katalogNummer, crewGroesse)
     {
         LadungInTonnen = ladungInTonnen;
     }
 
     public override string GetStatusBericht()
-        => $"FrachtShip {Name} transportiert {LadungInTonnen} t Fracht";
+        => $"CargoShip {Name} transportiert {LadungInTonnen} t Fracht";
 }
 
-public class ForschungsShip : SpaceShip
+public class ResearchShip : SpaceShip
 {
     public string Forschungsgebiet { get; }
 
-    public ForschungsShip(string name, uint katalogNummer, int crewGroesse, string forschungsgebiet)
+    public ResearchShip(string name, uint katalogNummer, int crewGroesse, string forschungsgebiet)
         : base(name, katalogNummer, crewGroesse)
     {
         Forschungsgebiet = forschungsgebiet;
     }
 
     public override string GetStatusBericht()
-        => $"ForschungsShip {Name} untersucht {Forschungsgebiet}";
+        => $"ResearchShip {Name} untersucht {Forschungsgebiet}";
 }
 ```
 
@@ -369,8 +369,8 @@ So wird deutlich, dass nicht der konkrete Typ wichtig ist, sondern nur der durch
 #### ✅ Testaufgabe
 
 ```csharp
-SpaceShip cargoShip = new FrachtShip("Hermes", 50001, 12, 40.5f);
-SpaceShip researchShip = new ForschungsShip("Gaia", 50002, 8, "Exoplaneten");
+SpaceShip cargoShip = new CargoShip("Hermes", 50001, 12, 40.5f);
+SpaceShip researchShip = new ResearchShip("Gaia", 50002, 8, "Exoplaneten");
 
 // sonne, erde und mond stammen aus Aufgabe 1
 IMissionsobjekt[] objekte = { sonne, erde, mond, cargoShip, researchShip };
