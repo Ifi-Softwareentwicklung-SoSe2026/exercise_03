@@ -265,7 +265,7 @@ Console.WriteLine(sonne.VergleicheMit(erde));   // negativ, da 10001 < 20001
 - Eine Klasse kann mehrere Interfaces implementieren.
 - `IComparable<T>` aus der .NET-Bibliothek funktioniert ähnlich wie `IVergleichbar<T>`.
 
-### **🚀 Aufgabe 2: SpaceShip-Klassen mit IMissionsobjekt implementieren**
+### **🚀 Aufgabe 2: SpaceShip mit Unterklassen über IMissionsobjekt nutzen**
 
 *Lernziele: Interface-Nutzung im Code, Polymorphismus, gemeinsame Verarbeitung unterschiedlicher Objekte*
 
@@ -273,7 +273,7 @@ Console.WriteLine(sonne.VergleicheMit(erde));   // negativ, da 10001 < 20001
 
 #### **📝 Aufgabenstellung**
 
-Erweitere das Missionssystem um eine neue Klasse `SpaceShip`, die ebenfalls das Interface `IMissionsobjekt` aus Aufgabe 1 implementiert.
+Erweitere das Missionssystem um eine neue Basisklasse `SpaceShip`, die ebenfalls das Interface `IMissionsobjekt` aus Aufgabe 1 implementiert.
 
 Die Klasse `SpaceShip` dient als gemeinsame Basisklasse für verschiedene Raumschiffe. Leite davon mindestens zwei konkrete Unterklassen ab, damit sichtbar wird, warum ein Interface in einer Schleife oder einer Hilfsmethode nützlich ist.
 
@@ -300,6 +300,7 @@ public abstract class SpaceShip : IMissionsobjekt
 ```
 
 - `SpaceShip` soll gemeinsame Eigenschaften aller Raumschiffe kapseln.
+- Wie in Aufgabe 1 vorgegeben, gehört `GetStatusBericht()` dabei zum Vertrag von `IMissionsobjekt`.
 - `GetStatusBericht()` bleibt abstrakt, damit jede Unterklasse ihren eigenen Bericht formuliert.
 
 **2. Konkrete Unterklassen anlegen**
