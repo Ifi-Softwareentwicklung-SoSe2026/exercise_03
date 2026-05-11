@@ -350,6 +350,7 @@ Speichere Himmelskörper und Raumschiffe gemeinsam in einem Array oder in einer 
 So kannst du alle Objekte mit derselben Schleife verarbeiten, obwohl sie aus unterschiedlichen Klassenhierarchien stammen:
 
 ```csharp
+// sonne, erde und mond wurden bereits in Aufgabe 1 erzeugt
 IMissionsobjekt[] objekte = { sonne, erde, mond, cargoShip, researchShip };
 
 foreach (var objekt in objekte)
@@ -370,6 +371,7 @@ So wird deutlich, dass nicht der konkrete Typ wichtig ist, sondern nur der durch
 SpaceShip cargoShip = new FrachtShip("Hermes", 50001, 12, 40.5f);
 SpaceShip researchShip = new ForschungsShip("Gaia", 50002, 8, "Exoplaneten");
 
+// sonne, erde und mond stammen aus Aufgabe 1
 IMissionsobjekt[] objekte = { sonne, erde, mond, cargoShip, researchShip };
 
 foreach (var objekt in objekte)
