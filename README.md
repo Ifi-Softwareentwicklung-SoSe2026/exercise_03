@@ -181,7 +181,7 @@ Git und GitHub haben zwei Dimensionen, die du in dieser Aufgabe beide kennenlern
 4. Committe eine kleine Übungsänderung mit einer aussagekräftigen Nachricht
 5. Push den Branch und erstelle einen Pull Request auf GitHub
 6. Fordere einen Code Review von Copilot an und arbeite das Feedback ein
-7. merge den PR nach Freigabe nach `main`
+7. Merge den PR nach Freigabe nach `main`
 
 ### **🔌 Aufgabe 1: Interfaces für die Mission**
 
