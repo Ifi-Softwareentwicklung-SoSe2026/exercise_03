@@ -13,6 +13,7 @@ icon: img/TUBAF_Logo_blau.png
 comment:  Übung Softwareentwicklung 03
 
 import: https://raw.githubusercontent.com/liaScript/mermaid_template/master/README.md
+import: https://raw.githubusercontent.com/liascript-templates/plantUML/master/README.md
 
 link:   https://raw.githubusercontent.com/vgoehler/LiaScript_CSS_Provider/refs/heads/main/dist/university.css
 
@@ -314,7 +315,7 @@ Jede Unterklasse soll `GetStatusBericht()` passend überschreiben.
 
 Ein mögliches Klassendiagramm wäre zum Beispiel:
 
-```plantuml
+```text @plantUML
 @startuml
 interface IMissionsobjekt {
   +GetStatusBericht() : string
