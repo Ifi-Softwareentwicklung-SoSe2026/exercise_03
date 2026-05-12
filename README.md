@@ -2,7 +2,7 @@
 
 author:   Volker Göhler
 email:    volker.goehler@informatik.tu-freiberg.de
-version:  0.0.2
+version:  0.0.3
 language: de
 narrator: Deutsch Female
 
@@ -71,7 +71,7 @@ Wir erweitern die Raumfahrt-Mission um Konzepte der **Schnittstellenprogrammieru
 ### **📌 Vorbereitung: Projekt aktualisieren**
 
 1. Nutze das bestehende **C#-Konsolenprojekt** `RaumfahrtMission` aus Aufgabe 02.
-2. Füge die finalen Klassen aus Aufgabe 02 hinzu (falls noch nicht vorhanden), die `solutions`-Version aus `exercise_02` kann als Ausgangspunkt genutzt werden.
+2. Füge die finalen Klassen aus Aufgabe 02 hinzu (falls noch nicht vorhanden), die Version aus `solutions` im `exercise_02` Repo kann als Ausgangspunkt genutzt werden.
 3. Alle Klassen sollen weiterhin im Namespace **`RaumfahrtMission`** liegen.
 
 ### **🛠️ Aufgabe 0: Git und GitHub kennenlernen**
@@ -95,7 +95,7 @@ Git und GitHub haben zwei Dimensionen, die du in dieser Aufgabe beide kennenlern
 
 1. **Repository klonen**
 
-   - Öffne VS Code und klone dein GitHub-Classroom-Repository über *Source Control → Clone Repository*.
+   - Öffne VS Code und klone dein GitHub-Classroom-Repository über *Source Control → Clone Repository* (Erscheint nur in einem leeren Fenster).
    - Alternativ im Terminal: `git clone <URL>`
 
 2. **Feature-Branch erstellen**
@@ -109,6 +109,32 @@ Git und GitHub haben zwei Dimensionen, die du in dieser Aufgabe beide kennenlern
      ```
 
    - Das hält den `main`-Branch sauber und ermöglicht später einen sauberen Pull Request.
+
+```mermaid @mermaid
+---
+title: "Git-Workflow: Branching und Merging"
+---
+gitGraph
+   commit
+   commit
+   branch develop
+   checkout develop
+   commit
+   branch feature
+   checkout feature
+   commit
+   checkout main
+   merge feature
+   checkout develop
+   commit
+   commit
+   commit
+   checkout main
+   merge develop
+   commit
+   commit
+
+```
 
 3. **Änderungen committen**
 
@@ -164,10 +190,6 @@ Git und GitHub haben zwei Dimensionen, die du in dieser Aufgabe beide kennenlern
      git pull origin main
      ```
 
-<!-- class="lia-callout--note" -->
-> **Hinweis:**
-> Erstelle für **jede der folgenden Aufgaben** (1–4) einen eigenen Feature-Branch, einen Pull Request und fordere dort einen Copilot-Review an. So übst du den vollständigen Git-Workflow.
-
 #### Aufgabenliste 00 
 
 1. Clone dein Repository 
@@ -198,13 +220,14 @@ Definiere das Interface `IMissionsobjekt`, das alle Objekte im Missionssystem be
 
 **1. Interface `IMissionsobjekt` definieren**
 
-```csharp
-public interface IMissionsobjekt
-{
-    string Name { get; }
-    uint KatalogNummer { get; }
-    string GetStatusBericht();
+```text @plantUML
+@startuml
+interface IMissionsobjekt {
+  +Name : string
+  +KatalogNummer : uint
+  +GetStatusBericht() : string
 }
+@enduml
 ```
 
 **2. Interface implementieren**
@@ -216,15 +239,16 @@ public interface IMissionsobjekt
   - Für `Planet`: *"Planet [Name] umkreist Körper [KatalogNummerReferenz] in [Umlaufzeit] Jahren"*
   - Für `Mond`: *"Mond [Name] umkreist Körper [KatalogNummerReferenz] in [Umlaufzeit] Jahren"*
 
-**3. Weiteres Interface `IVergleichbar<T>` definieren**
+**3. Weiteres Interface `IVergleichbar<T>` definieren (mit Template)**
 
-```csharp
-public interface IVergleichbar<T>
-{
-    int VergleicheMit(T anderer);
-    bool IstGroesserAls(T anderer);
-    bool IstKleinerAls(T anderer);
+```text @plantUML
+@startuml
+interface IVergleichbar<T> {
+    +VergleicheMit(T anderer) : int 
+    +IstGroesserAls(T anderer) : bool 
+    +IstKleinerAls(T anderer) : bool 
 }
+@enduml
 ```
 
 - Implementiere `IVergleichbar<Himmelskoerper>` in `Himmelskoerper`, sodass Himmelskörper anhand ihrer `KatalogNummer` verglichen werden können.
@@ -243,7 +267,7 @@ public interface IVergleichbar<T>
 > - `<=`, `>=` (optional)
 >
 > Damit kannst du statt `erde.IstGroesserAls(mond)` direkt `erde > mond` schreiben.
-> Die Interface-Methoden bleiben die eigentliche Implementierung — die Operatoren sind nur **syntaktischer Zucker** darüber.
+> Die Interface-Methoden bleiben die eigentliche Implementierung, die Operatoren sind nur **syntaktischer Zucker** darüber.
 
 #### ✅ Testaufgabe
 
@@ -282,27 +306,28 @@ Die Klasse `SpaceShip` dient als gemeinsame Basisklasse für verschiedene Raumsc
 
 **1. Abstrakte Klasse `SpaceShip` einführen**
 
-```csharp
-public abstract class SpaceShip : IMissionsobjekt
-{
-    public string Name { get; }
-    public uint KatalogNummer { get; }
-    public int CrewGroesse { get; }
-
-    protected SpaceShip(string name, uint katalogNummer, int crewGroesse)
-    {
-        Name = name;
-        KatalogNummer = katalogNummer;
-        CrewGroesse = crewGroesse;
-    }
-
-    public abstract string GetStatusBericht();
+```text @plantUML
+@startuml
+interface IMissionsobjekt {
+  +GetStatusBericht() : string
 }
+
+abstract class SpaceShip {
+  +Name : string
+  +KatalogNummer : uint
+  +CrewGroesse : int
+  +{abstract} GetStatusBericht() : string
+  +ToString() : string
+}
+
+IMissionsobjekt <|.. SpaceShip
+@enduml
 ```
 
 - `SpaceShip` soll gemeinsame Eigenschaften aller Raumschiffe kapseln.
 - Wie in Aufgabe 1 vorgegeben, gehört `GetStatusBericht()` dabei zum Vertrag von `IMissionsobjekt`.
 - `GetStatusBericht()` bleibt abstrakt, damit jede Unterklasse ihren eigenen Bericht formuliert.
+- `ToString()` soll in `SpaceShip` eine allgemeine Darstellung liefern, die von den Unterklassen erweitert oder überschrieben werden kann.
 
 **2. Konkrete Unterklassen anlegen**
 
@@ -311,7 +336,7 @@ Leite mindestens zwei Klassen von `SpaceShip` ab, zum Beispiel:
 - `CargoShip` mit einer Eigenschaft `LadungInTonnen`
 - `ResearchShip` mit einer Eigenschaft `Forschungsgebiet`
 
-Jede Unterklasse soll `GetStatusBericht()` passend überschreiben.
+Jede Unterklasse soll `GetStatusBericht()` und `ToString()` passend überschreiben.
 
 Ein mögliches Klassendiagramm wäre zum Beispiel:
 
@@ -326,16 +351,19 @@ abstract class SpaceShip {
   +KatalogNummer : uint
   +CrewGroesse : int
   +{abstract} GetStatusBericht() : string
+  +ToString() : string
 }
 
 class CargoShip {
   +LadungInTonnen : float
   +GetStatusBericht() : string
+  +ToString() : string
 }
 
 class ResearchShip {
   +Forschungsgebiet : string
   +GetStatusBericht() : string
+  +ToString() : string
 }
 
 IMissionsobjekt <|.. SpaceShip
@@ -344,7 +372,9 @@ SpaceShip <|-- ResearchShip
 @enduml
 ```
 
-**3. Interface gezielt nutzen**
+**3. Ausgaben**
+
+**3.1 Interface gezielt nutzen**
 
 Speichere Himmelskörper und Raumschiffe gemeinsam in einem Array oder in einer Liste vom Typ `IMissionsobjekt`.
 
@@ -356,13 +386,13 @@ IMissionsobjekt[] objekte = { sonne, erde, mond, cargoShip, researchShip };
 
 foreach (var objekt in objekte)
 {
-    Console.WriteLine(objekt.GetStatusBericht());
+    MissionsReport(objekt);
 }
 ```
 
-**4. Hilfsmethode `MissionsReport` für beliebige Missionsobjekte**
+**3.2 Hilfsmethode `MissionsReport` für beliebige Missionsobjekte**
 
-Schreibe zusätzlich eine Methode `MissionsReport`, die ein beliebiges `IMissionsobjekt` entgegennimmt und sowohl die normale Objektausgabe über `ToString()` als auch den `StatusBericht` ausgibt.
+Die Methode `MissionsReport`, die ein beliebiges `IMissionsobjekt` entgegennimmt und sowohl die normale Objektausgabe über `ToString()` als auch den `StatusBericht` ausgibt, ist in `Program.cs` bereits vorgegeben:
 
 ```csharp
 static void MissionsReport(IMissionsobjekt objekt)
@@ -377,22 +407,17 @@ So wird deutlich, dass nicht der konkrete Typ wichtig ist, sondern nur der durch
 #### ✅ Testaufgabe
 
 ```csharp
-SpaceShip cargoShip = new CargoShip("Hermes", 50001, 12, 40.5f);
-SpaceShip researchShip = new ResearchShip("Gaia", 50002, 8, "Exoplaneten");
+var cargoShip = new CargoShip("CargoMaster 3000", 50001, 5, 10000.0f);
+var researchShip = new ResearchShip("Explorer X", 50002, 10, "Astrophysik");
 
-static void MissionsReport(IMissionsobjekt objekt)
-{
+static void MissionsReport(IMissionsobjekt objekt){
     Console.WriteLine(objekt.ToString());
     Console.WriteLine(objekt.GetStatusBericht());
 }
 
-// sonne, erde und mond stammen aus Aufgabe 1
-IMissionsobjekt[] objekte = { sonne, erde, mond, cargoShip, researchShip };
-
-foreach (var objekt in objekte)
-{
-    MissionsReport(objekt);
-}
+IMissionsobjekt[] schiffe = { cargoShip, researchShip };
+foreach (var obj in schiffe.Concat(objekte))
+    MissionsReport(obj);
 ```
 
 💡 Tipps
