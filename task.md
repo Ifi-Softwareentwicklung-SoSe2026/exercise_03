@@ -16,6 +16,7 @@ Erweitere die Modellierung von Pflanzen durch Vererbung und Interfaces.
   - `ICookable` (für essbare Pflanzen)
   - `IWoodProducer` (für holzliefernde Pflanzen)
 - Implementiere die Interfaces in den passenden Klassen.
+- Erstelle mindestens ein Pflanzenobjekt, das **beide** Interfaces (`ICookable` und `IWoodProducer`) implementiert.
 - Gib im `Program.cs` für mehrere Pflanzenobjekte aus:
   - Grundinformationen aus der Basisklasse
   - zusätzliches Verhalten über die Interfaces
@@ -23,5 +24,6 @@ Erweitere die Modellierung von Pflanzen durch Vererbung und Interfaces.
 ## Akzeptanzkriterien
 - Die Klassenhierarchie ist klar und korrekt.
 - Mindestens zwei Interfaces sind definiert und sinnvoll eingesetzt.
+- Mindestens eine konkrete Pflanzenklasse implementiert gleichzeitig `ICookable` und `IWoodProducer`.
 - Das Projekt baut ohne Fehler (`dotnet build`).
 - Beim Ausführen (`dotnet run`) ist die Ausgabe nachvollziehbar und zeigt die Interface-Fähigkeiten.
