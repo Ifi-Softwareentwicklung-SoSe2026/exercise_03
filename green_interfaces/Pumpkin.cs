@@ -1,4 +1,4 @@
-namespace exercise_code;
+namespace green_interfaces;
 
 public class Pumpkin : Plants, ICookable
 {

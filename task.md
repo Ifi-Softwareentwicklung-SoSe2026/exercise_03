@@ -1,7 +1,7 @@
 # Aufgabe: Vererbung und Interfaces mit Pflanzen
 
 ## Kontext
-Im Ordner `exercise_code` liegt ein einfaches C#-Konsolenprojekt.
+Im Ordner `green_interfaces` liegt ein einfaches C#-Konsolenprojekt.
 
 ## Ziel
 Erweitere die Modellierung von Pflanzen durch Vererbung und Interfaces.
