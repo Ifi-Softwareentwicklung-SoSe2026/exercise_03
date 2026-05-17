@@ -8,10 +8,11 @@ Erweitere die Modellierung von Pflanzen durch Vererbung und Interfaces.
 
 ## Aufgabenstellung
 - Erstelle eine abstrakte Basisklasse `Plants` für gemeinsame Eigenschaften (z. B. Name, Alter).
-- Erstelle zwei konkrete Klassen:
+- Erstelle konkrete Klassen:
   - `AppleTree`
   - `Pumpkin`
-- Nutze Vererbung, sodass beide Klassen von `Plants` abgeleitet sind.
+  - `ChestnutTree`
+- Nutze Vererbung, sodass alle Klassen von `Plants` abgeleitet sind.
 - Definiere passende Interfaces für spezielles Verhalten, z. B.:
   - `ICookable` (für essbare Pflanzen)
   - `IWoodProducer` (für holzliefernde Pflanzen)
